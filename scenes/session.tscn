@@ -1,0 +1,115 @@
+[gd_scene load_steps=21 format=3 uid="uid://bwtotan76woy7"]
+
+[ext_resource type="Script" uid="uid://diqkqne4f24er" path="res://scripts/CameraController.gd" id="1_wfdo7"]
+[ext_resource type="Script" uid="uid://d2buls6s70umx" path="res://scripts/CameraSelector.gd" id="2_w6gu6"]
+[ext_resource type="Script" uid="uid://c54leg5pg7igk" path="res://scripts/components/Selectable.gd" id="3_eemmi"]
+[ext_resource type="Script" uid="uid://mnt1y0ftee3j" path="res://scripts/Entity.gd" id="3_t88s8"]
+[ext_resource type="Script" uid="uid://dr60dauwvqftp" path="res://scripts/components/Footprint.gd" id="5_he6ka"]
+[ext_resource type="Shader" uid="uid://ddovdecc784w6" path="res://shaders/selection.gdshader" id="5_igxl8"]
+[ext_resource type="Texture2D" uid="uid://cxofqvhsgeg3b" path="res://textures/ellipse.png" id="6_noavr"]
+[ext_resource type="Texture2D" uid="uid://clhbxi43tyb2n" path="res://textures/ellipse_mask.png" id="7_jpunk"]
+[ext_resource type="Script" uid="uid://7bvl60kkinlg" path="res://scripts/components/Motion.gd" id="9_jpunk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wfdo7"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_w6gu6"]
+sky_material = SubResource("ProceduralSkyMaterial_wfdo7")
+
+[sub_resource type="Environment" id="Environment_eemmi"]
+background_mode = 2
+sky = SubResource("Sky_w6gu6")
+tonemap_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_wfdo7"]
+size = Vector3(0.5, 2, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0eh76"]
+render_priority = 0
+shader = ExtResource("5_igxl8")
+shader_parameter/albedo = ExtResource("6_noavr")
+shader_parameter/mask = ExtResource("7_jpunk")
+shader_parameter/color = Vector3(1, 0, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_t88s8"]
+material = SubResource("ShaderMaterial_0eh76")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t88s8"]
+points = PackedVector3Array(-0.25, -1, -0.25, -0.25, -1, 0.25, -0.25, 1, -0.25, 0.25, -1, -0.25, 0.25, -1, 0.25, -0.25, 1, 0.25, 0.25, 1, -0.25, 0.25, 1, 0.25)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_wfdo7"]
+vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noavr"]
+albedo_color = Color(0.117647, 0.984314, 0.266667, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_wfdo7"]
+material = SubResource("StandardMaterial3D_noavr")
+size = Vector2(50, 50)
+orientation = 1
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_jpunk"]
+data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
+
+[node name="Session" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_eemmi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="DebugEntity" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="VisualActor" type="MeshInstance3D" parent="DebugEntity"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_wfdo7")
+skeleton = NodePath("../..")
+script = ExtResource("3_t88s8")
+
+[node name="Selectable" type="Node3D" parent="DebugEntity"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+script = ExtResource("3_eemmi")
+
+[node name="SelectionRing" type="MeshInstance3D" parent="DebugEntity/Selectable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("PlaneMesh_t88s8")
+
+[node name="Footprint" type="Node" parent="DebugEntity"]
+script = ExtResource("5_he6ka")
+
+[node name="Obstruction" type="StaticBody3D" parent="DebugEntity"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DebugEntity/Obstruction"]
+shape = SubResource("ConvexPolygonShape3D_t88s8")
+
+[node name="Motion" type="NavigationAgent3D" parent="DebugEntity"]
+script = ExtResource("9_jpunk")
+
+[node name="CameraController" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 0, 0)
+script = ExtResource("1_wfdo7")
+
+[node name="Camera3D" type="Camera3D" parent="CameraController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 120)
+current = true
+fov = 45.0
+near = 2.0
+far = 4096.0
+script = ExtResource("2_w6gu6")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_wfdo7")
+
+[node name="DebugTerrain" type="MeshInstance3D" parent="NavigationRegion3D"]
+mesh = SubResource("QuadMesh_wfdo7")
+skeleton = NodePath("../../DebugEntity/VisualActor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/DebugTerrain"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DebugTerrain/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_jpunk")
