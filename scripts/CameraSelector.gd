@@ -1,7 +1,10 @@
 extends Camera3D
 
 @onready var ray_length: float = 1000.0  # Max ray distance
-var selected_object: Variant = null
+var selected_object: CmpEntity = null
+
+
+signal entities_selected_changed(entities : Array[CmpEntity])
 
 func get_nav_target() -> Variant:
 	var space_state := get_world_3d().direct_space_state
@@ -27,15 +30,19 @@ func get_nav_target() -> Variant:
 	print("No valid position found")
 	return null
 
+
+
+
 func _input(event : InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			select_object()
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			if selected_object != null:
-				var cmpMotion : Motion = selected_object.find_child("Motion")
+			if selected_object != null and selected_object is CmpEntity:
+				var cmpMotion : CmpMotion = selected_object.query_component("Motion")
 				if cmpMotion != null:
 					cmpMotion.move_to(get_nav_target())
+
 func select_object() -> void:
 	var space_state := get_world_3d().direct_space_state
 	var mouse_position := get_viewport().get_mouse_position()
@@ -50,16 +57,28 @@ func select_object() -> void:
 	if result.has("collider"):
 		
 		var target : Variant = result["collider"].get_parent()
-		var cmpSelectable : Selectable = target.find_child("Selectable")
+
+		if target == self.selected_object:
+			return
+
+		if self.selected_object != null:
+			self.selected_object.query_component("Selectable").deselect()
+			self.selected_object = null
+			entities_selected_changed.emit([] as Array[CmpEntity])
+		
+		if target is not CmpEntity:
+			return
+		
+		var cmpSelectable : Selectable = target.query_component("Selectable")
 		if cmpSelectable != null:
 			self.selected_object = target
+			var entities : Array[CmpEntity] = [target]
+			entities_selected_changed.emit(entities)
 			cmpSelectable.select()
-		elif self.selected_object != null:
-			self.selected_object.find_child("Selectable").deselect()
-			self.selected_object = null
 	else:
 		if self.selected_object != null:
-			self.selected_object.find_child("Selectable").deselect()
+			self.selected_object.query_component("Selectable").deselect()
 			self.selected_object = null
+			entities_selected_changed.emit([])
 		else:
 			print("No object selected.")

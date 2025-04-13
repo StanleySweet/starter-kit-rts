@@ -67,29 +67,33 @@ func _ready() -> void:
 	self.target_zoom = zoom_default
 	self._update_camera_position()
 
-func _input(event: InputEvent) -> void:
+# Camera movement settings
+@export var edge_scroll_margin: int = 20  # Pixels from edge that activates scrolling
+@export var camera_speed: float = 10.0    # Movement speed
+@export var edge_scroll_enabled: bool = true
 
-	if event is InputEventMouseMotion:
-		if dragging:
-			_handle_drag(event)
-
-	elif event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT:
-			dragging = event.pressed
-			if dragging:
-				last_mouse_position = event.position
-
-		if event.button_index == MOUSE_BUTTON_MIDDLE:
-			self._handle_pan(event)
-
-		elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			self._handle_zoom(-zoom_speed_wheel)
-
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			self._handle_zoom(zoom_speed_wheel)
-
-	elif event is InputEventKey and event.pressed:
-		self._handle_hotkeys(event)
+func _process(delta : float) -> void:
+	if not edge_scroll_enabled:
+		return
+		
+	var mouse_pos := get_viewport().get_mouse_position()
+	var viewport_size : Vector2i = get_viewport().size
+	var move_dir := Vector3.ZERO
+	
+	if mouse_pos.x < edge_scroll_margin:
+		move_dir.x -= 1
+	elif mouse_pos.x > viewport_size.x - edge_scroll_margin:
+		move_dir.x += 1
+		
+	if mouse_pos.y < edge_scroll_margin:
+		move_dir.z -= 1  # For 3D using Z as forward direction
+	elif mouse_pos.y > viewport_size.y - edge_scroll_margin:
+		move_dir.z += 1  # For 3D using Z as forward direction
+	
+	# Apply movement to the target_position instead of directly to the camera
+	if move_dir != Vector3.ZERO:
+		move_dir = move_dir.normalized()
+		target_position += move_dir * camera_speed * delta
 
 func frame_independent_lerp(delta : float, smoothness : float) -> float:
 	return 1.0 - exp(-smoothness * delta * 60)
@@ -113,6 +117,10 @@ func _handle_drag(event: InputEventMouseMotion) -> void:
 
 	target_rotation_y -= delta.x * rotate_y_speed
 	target_rotation_x = -clamp(target_rotation_x - delta.y * rotate_x_speed, rotate_x_min, rotate_x_max)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		_handle_hotkeys(event)
 
 func _handle_hotkeys(event: InputEventKey) -> void:
 	if Input.is_action_pressed("camera.down"):

@@ -1,14 +1,28 @@
-[gd_scene load_steps=21 format=3 uid="uid://bwtotan76woy7"]
+[gd_scene load_steps=36 format=3 uid="uid://bwtotan76woy7"]
 
+[ext_resource type="Script" uid="uid://b8no25psxp3de" path="res://scripts/components/VisualActor.gd" id="1_0ngtw"]
+[ext_resource type="PackedScene" uid="uid://dmyrflud401tg" path="res://addons/godot_plush_character/components/godot_plush/godot_plush_skin.tscn" id="1_jpunk"]
 [ext_resource type="Script" uid="uid://diqkqne4f24er" path="res://scripts/CameraController.gd" id="1_wfdo7"]
 [ext_resource type="Script" uid="uid://d2buls6s70umx" path="res://scripts/CameraSelector.gd" id="2_w6gu6"]
 [ext_resource type="Script" uid="uid://c54leg5pg7igk" path="res://scripts/components/Selectable.gd" id="3_eemmi"]
-[ext_resource type="Script" uid="uid://mnt1y0ftee3j" path="res://scripts/Entity.gd" id="3_t88s8"]
+[ext_resource type="Script" uid="uid://o66bql3ynnp4" path="res://scripts/components/Entity.gd" id="3_sdj5t"]
 [ext_resource type="Script" uid="uid://dr60dauwvqftp" path="res://scripts/components/Footprint.gd" id="5_he6ka"]
-[ext_resource type="Shader" uid="uid://ddovdecc784w6" path="res://shaders/selection.gdshader" id="5_igxl8"]
 [ext_resource type="Texture2D" uid="uid://cxofqvhsgeg3b" path="res://textures/ellipse.png" id="6_noavr"]
 [ext_resource type="Texture2D" uid="uid://clhbxi43tyb2n" path="res://textures/ellipse_mask.png" id="7_jpunk"]
+[ext_resource type="Script" uid="uid://c851qohqlvebn" path="res://scripts/components/EntityAI.gd" id="9_hh41f"]
 [ext_resource type="Script" uid="uid://7bvl60kkinlg" path="res://scripts/components/Motion.gd" id="9_jpunk"]
+[ext_resource type="Texture2D" uid="uid://do15o2bsnp2tf" path="res://addons/kenney_cursor_pack/sprites/gauntlet_open.png" id="12_8acwk"]
+[ext_resource type="Script" uid="uid://ighkv3e533rb" path="res://scripts/components/Identity.gd" id="12_dlg3r"]
+[ext_resource type="Texture2D" uid="uid://c4y1iafmkp4if" path="res://addons/kenney_cursor_pack/sprites/gauntlet_default.png" id="12_uyd3r"]
+[ext_resource type="Texture2D" uid="uid://c6wpwd87csbtq" path="res://icon.svg" id="13_66f5p"]
+[ext_resource type="PackedScene" uid="uid://c6iy24g7orw1a" path="res://addons/kenney_survival_kit/models/tree-tall.glb" id="14_5q380"]
+[ext_resource type="Texture2D" uid="uid://ihs0152nidix" path="res://addons/kenney_cursor_pack/sprites/tool_axe_single.png" id="15_1hh83"]
+[ext_resource type="Script" uid="uid://dk83u2pbkydu6" path="res://scripts/SelectionManager.gd" id="15_524ts"]
+[ext_resource type="Script" uid="uid://cxsyyhsv7a0dp" path="res://scripts/CursorManager.gd" id="15_jw3sc"]
+[ext_resource type="Script" uid="uid://bw3glv3nm8bj0" path="res://scripts/components/Ownership.gd" id="15_lh0w6"]
+[ext_resource type="Script" uid="uid://bmvgldruduyhq" path="res://scripts/gui/EntityPanel.gd" id="19_boucf"]
+[ext_resource type="Script" uid="uid://t1gykh7h0tdw" path="res://scripts/components/PlayerManager.gd" id="22_ibvuv"]
+[ext_resource type="Script" uid="uid://cuuxabwuo57cd" path="res://scripts/resources/Player.gd" id="23_ck40k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wfdo7"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -22,36 +36,45 @@ background_mode = 2
 sky = SubResource("Sky_w6gu6")
 tonemap_mode = 2
 
-[sub_resource type="BoxMesh" id="BoxMesh_wfdo7"]
-size = Vector3(0.5, 2, 0.5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0eh76"]
-render_priority = 0
-shader = ExtResource("5_igxl8")
-shader_parameter/albedo = ExtResource("6_noavr")
-shader_parameter/mask = ExtResource("7_jpunk")
-shader_parameter/color = Vector3(1, 0, 0)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_t88s8"]
-material = SubResource("ShaderMaterial_0eh76")
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t88s8"]
-points = PackedVector3Array(-0.25, -1, -0.25, -0.25, -1, 0.25, -0.25, 1, -0.25, 0.25, -1, -0.25, 0.25, -1, 0.25, -0.25, 1, 0.25, 0.25, 1, -0.25, 0.25, 1, 0.25)
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uyd3r"]
+radius = 0.845215
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_wfdo7"]
-vertices = PackedVector3Array(-24.5, 0.5, -24.5, -24.5, 0.5, 24.5, 24.5, 0.5, 24.5, 24.5, 0.5, -24.5)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+vertices = PackedVector3Array(-49.5, 0.38324, 0, -4.75, 0.38324, 0, -4.25, 0.38324, -1, -3.5, 0.38324, -49.5, -49.5, 0.38324, -49.5, -3.5, 0.38324, -1, -2.75, 0.38324, -0.75, 49.5, 0.38324, 0, 49.5, 0.38324, -49.5, -2.75, 0.38324, 0, -4.25, 0.38324, 1, -49.5, 0.38324, 49.5, -3.5, 0.38324, 49.5, -3.5, 0.38324, 1, -2.75, 0.38324, 0.75, 49.5, 0.38324, 49.5)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Array(2, 4, 3), PackedInt32Array(3, 5, 2), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 8), PackedInt32Array(6, 8, 7), PackedInt32Array(7, 9, 6), PackedInt32Array(1, 10, 0), PackedInt32Array(0, 10, 11), PackedInt32Array(11, 10, 12), PackedInt32Array(10, 13, 12), PackedInt32Array(13, 14, 12), PackedInt32Array(12, 14, 15), PackedInt32Array(15, 14, 7), PackedInt32Array(14, 9, 7)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noavr"]
 albedo_color = Color(0.117647, 0.984314, 0.266667, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_wfdo7"]
 material = SubResource("StandardMaterial3D_noavr")
-size = Vector2(50, 50)
+size = Vector2(100, 100)
 orientation = 1
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_jpunk"]
 data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jw3sc"]
+height = 6.47314
+radius = 0.377441
+
+[sub_resource type="Resource" id="Resource_qr0wu"]
+script = ExtResource("23_ck40k")
+player_name = "Player"
+player_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://cuuxabwuo57cd"
+
+[sub_resource type="Resource" id="Resource_ck40k"]
+script = ExtResource("23_ck40k")
+player_name = "Player 1"
+player_color = Color(0, 0, 1, 1)
+metadata/_custom_type_script = "uid://cuuxabwuo57cd"
+
+[sub_resource type="Resource" id="Resource_hxrid"]
+script = ExtResource("23_ck40k")
+player_name = "Player 2"
+player_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://cuuxabwuo57cd"
 
 [node name="Session" type="Node"]
 
@@ -61,34 +84,6 @@ environment = SubResource("Environment_eemmi")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
-
-[node name="DebugEntity" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-
-[node name="VisualActor" type="MeshInstance3D" parent="DebugEntity"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_wfdo7")
-skeleton = NodePath("../..")
-script = ExtResource("3_t88s8")
-
-[node name="Selectable" type="Node3D" parent="DebugEntity"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-script = ExtResource("3_eemmi")
-
-[node name="SelectionRing" type="MeshInstance3D" parent="DebugEntity/Selectable"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-mesh = SubResource("PlaneMesh_t88s8")
-
-[node name="Footprint" type="Node" parent="DebugEntity"]
-script = ExtResource("5_he6ka")
-
-[node name="Obstruction" type="StaticBody3D" parent="DebugEntity"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DebugEntity/Obstruction"]
-shape = SubResource("ConvexPolygonShape3D_t88s8")
-
-[node name="Motion" type="NavigationAgent3D" parent="DebugEntity"]
-script = ExtResource("9_jpunk")
 
 [node name="CameraController" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 0, 0)
@@ -102,14 +97,184 @@ near = 2.0
 far = 4096.0
 script = ExtResource("2_w6gu6")
 
+[node name="Entities" type="Node3D" parent="."]
+
+[node name="DebugEntity" type="Node3D" parent="Entities"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("3_sdj5t")
+
+[node name="VisualActor" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("1_0ngtw")
+actor = ExtResource("1_jpunk")
+
+[node name="Footprint" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("5_he6ka")
+size = Vector2(2, 2)
+
+[node name="Obstruction" type="StaticBody3D" parent="Entities/DebugEntity"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/DebugEntity/Obstruction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0136719, 0.38324, 0.0462646)
+shape = SubResource("CylinderShape3D_uyd3r")
+
+[node name="Motion" type="NavigationAgent3D" parent="Entities/DebugEntity"]
+script = ExtResource("9_jpunk")
+
+[node name="EntityAI" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("9_hh41f")
+
+[node name="Identity" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("12_dlg3r")
+generic_name = "Godot Plush"
+icon = ExtResource("13_66f5p")
+
+[node name="Selectable" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("3_eemmi")
+outline_texture = ExtResource("6_noavr")
+outline_mask_texture = ExtResource("7_jpunk")
+
+[node name="Ownership" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("15_lh0w6")
+owner_id = 1
+
+[node name="DebugEntity2" type="Node3D" parent="Entities"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.88883, 0.5, 0)
+script = ExtResource("3_sdj5t")
+
+[node name="VisualActor" type="Node" parent="Entities/DebugEntity2"]
+script = ExtResource("1_0ngtw")
+actor = ExtResource("1_jpunk")
+
+[node name="Selectable" type="Node" parent="Entities/DebugEntity2"]
+script = ExtResource("3_eemmi")
+outline_texture = ExtResource("6_noavr")
+outline_mask_texture = ExtResource("7_jpunk")
+
+[node name="Footprint" type="Node" parent="Entities/DebugEntity2"]
+script = ExtResource("5_he6ka")
+size = Vector2(2, 2)
+
+[node name="Obstruction" type="StaticBody3D" parent="Entities/DebugEntity2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/DebugEntity2/Obstruction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0136719, 0.38324, 0.0462646)
+shape = SubResource("CylinderShape3D_uyd3r")
+
+[node name="Motion" type="NavigationAgent3D" parent="Entities/DebugEntity2"]
+script = ExtResource("9_jpunk")
+
+[node name="EntityAI" type="Node" parent="Entities/DebugEntity2"]
+script = ExtResource("9_hh41f")
+
+[node name="Identity" type="Node" parent="Entities/DebugEntity2"]
+script = ExtResource("12_dlg3r")
+generic_name = "Godot Plush"
+icon = ExtResource("13_66f5p")
+
+[node name="Ownership" type="Node" parent="Entities/DebugEntity2"]
+script = ExtResource("15_lh0w6")
+owner_id = 2
+
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_wfdo7")
 
 [node name="DebugTerrain" type="MeshInstance3D" parent="NavigationRegion3D"]
 mesh = SubResource("QuadMesh_wfdo7")
-skeleton = NodePath("../../DebugEntity/VisualActor")
+skeleton = NodePath("../../Entities/DebugEntity/VisualActor")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/DebugTerrain"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DebugTerrain/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_jpunk")
+
+[node name="Entities2" type="Node3D" parent="NavigationRegion3D"]
+
+[node name="Tree" type="Node3D" parent="NavigationRegion3D/Entities2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.66809, 0, 0)
+script = ExtResource("3_sdj5t")
+
+[node name="VisualActor" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
+script = ExtResource("1_0ngtw")
+actor = ExtResource("14_5q380")
+
+[node name="Selectable" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
+script = ExtResource("3_eemmi")
+outline_texture = ExtResource("6_noavr")
+outline_mask_texture = ExtResource("7_jpunk")
+ring_offset = 0.1
+
+[node name="Footprint" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
+script = ExtResource("5_he6ka")
+size = Vector2(2, 2)
+
+[node name="Obstruction" type="StaticBody3D" parent="NavigationRegion3D/Entities2/Tree"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Entities2/Tree/Obstruction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0136719, 2.61981, 0.0462646)
+shape = SubResource("CylinderShape3D_jw3sc")
+
+[node name="Identity" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
+script = ExtResource("12_dlg3r")
+generic_name = "Tree"
+icon = ExtResource("15_1hh83")
+
+[node name="Ownership" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
+script = ExtResource("15_lh0w6")
+
+[node name="SystemEntity" type="Node" parent="."]
+script = ExtResource("3_sdj5t")
+
+[node name="SelectionManager" type="Node" parent="SystemEntity"]
+script = ExtResource("15_524ts")
+
+[node name="CursorManager" type="Node" parent="SystemEntity"]
+script = ExtResource("15_jw3sc")
+default_cursor = ExtResource("12_uyd3r")
+gauntlet_open_cursor = ExtResource("12_8acwk")
+
+[node name="PlayerManager" type="Node" parent="SystemEntity"]
+script = ExtResource("22_ibvuv")
+players = Array[ExtResource("23_ck40k")]([SubResource("Resource_qr0wu"), SubResource("Resource_ck40k"), SubResource("Resource_hxrid")])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="EntityPanel" type="PanelContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -200.0
+offset_right = 75.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("19_boucf")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/EntityPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/EntityPanel/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/EntityPanel/MarginContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="EntityIcon" type="TextureRect" parent="CanvasLayer/EntityPanel/MarginContainer/VSplitContainer/HSplitContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityGenericName" type="Label" parent="CanvasLayer/EntityPanel/MarginContainer/VSplitContainer/HSplitContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Generic Name"
+
+[connection signal="entities_selected_changed" from="CameraController/Camera3D" to="CanvasLayer/EntityPanel" method="_on_camera_3d_entities_selected_changed"]
