@@ -1,3 +1,5 @@
+@tool
+
 class_name CmpVisualActor extends Node
 
 @export var actor : PackedScene

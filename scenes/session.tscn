@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bwtotan76woy7"]
+[gd_scene load_steps=45 format=3 uid="uid://bwtotan76woy7"]
 
 [ext_resource type="Script" uid="uid://b8no25psxp3de" path="res://scripts/components/VisualActor.gd" id="1_0ngtw"]
 [ext_resource type="PackedScene" uid="uid://dmyrflud401tg" path="res://addons/godot_plush_character/components/godot_plush/godot_plush_skin.tscn" id="1_jpunk"]
@@ -15,14 +15,16 @@
 [ext_resource type="Script" uid="uid://ighkv3e533rb" path="res://scripts/components/Identity.gd" id="12_dlg3r"]
 [ext_resource type="Texture2D" uid="uid://c4y1iafmkp4if" path="res://addons/kenney_cursor_pack/sprites/gauntlet_default.png" id="12_uyd3r"]
 [ext_resource type="Texture2D" uid="uid://c6wpwd87csbtq" path="res://icon.svg" id="13_66f5p"]
-[ext_resource type="PackedScene" uid="uid://c6iy24g7orw1a" path="res://addons/kenney_survival_kit/models/tree-tall.glb" id="14_5q380"]
 [ext_resource type="Texture2D" uid="uid://ihs0152nidix" path="res://addons/kenney_cursor_pack/sprites/tool_axe_single.png" id="15_1hh83"]
 [ext_resource type="Script" uid="uid://dk83u2pbkydu6" path="res://scripts/SelectionManager.gd" id="15_524ts"]
+[ext_resource type="Script" uid="uid://csrokhowmtnln" path="res://scripts/components/Health.gd" id="15_ck40k"]
 [ext_resource type="Script" uid="uid://cxsyyhsv7a0dp" path="res://scripts/CursorManager.gd" id="15_jw3sc"]
 [ext_resource type="Script" uid="uid://bw3glv3nm8bj0" path="res://scripts/components/Ownership.gd" id="15_lh0w6"]
+[ext_resource type="PackedScene" uid="uid://d1ccwogsw1udd" path="res://scenes/gaia/trees/tree_tall.tscn" id="16_ck40k"]
 [ext_resource type="Script" uid="uid://bmvgldruduyhq" path="res://scripts/gui/EntityPanel.gd" id="19_boucf"]
 [ext_resource type="Script" uid="uid://t1gykh7h0tdw" path="res://scripts/components/PlayerManager.gd" id="22_ibvuv"]
 [ext_resource type="Script" uid="uid://cuuxabwuo57cd" path="res://scripts/resources/Player.gd" id="23_ck40k"]
+[ext_resource type="Script" uid="uid://bvxv76gle2wui" path="res://scripts/gui/rectangular_selection_2d.gd" id="26_hxrid"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wfdo7"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -75,6 +77,37 @@ script = ExtResource("23_ck40k")
 player_name = "Player 2"
 player_color = Color(1, 0, 0, 1)
 metadata/_custom_type_script = "uid://cuuxabwuo57cd"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ck40k"]
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qr0wu"]
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+
+[sub_resource type="Gradient" id="Gradient_ck40k"]
+interpolation_color_space = 2
+colors = PackedColorArray(1, 0, 0, 1, 0, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qr0wu"]
+gradient = SubResource("Gradient_ck40k")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxrid"]
+texture = SubResource("GradientTexture1D_qr0wu")
+
+[sub_resource type="Gradient" id="Gradient_qr0wu"]
+offsets = PackedFloat32Array(0, 0.660405)
+colors = PackedColorArray(0, 0, 0, 0.392157, 0.977702, 0.977702, 0.977702, 0.392157)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hxrid"]
+gradient = SubResource("Gradient_qr0wu")
+height = 5
+fill_from = Vector2(1, 1)
 
 [node name="Session" type="Node"]
 
@@ -137,6 +170,9 @@ outline_mask_texture = ExtResource("7_jpunk")
 script = ExtResource("15_lh0w6")
 owner_id = 1
 
+[node name="Health" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("15_ck40k")
+
 [node name="DebugEntity2" type="Node3D" parent="Entities"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.88883, 0.5, 0)
 script = ExtResource("3_sdj5t")
@@ -195,7 +231,7 @@ script = ExtResource("3_sdj5t")
 
 [node name="VisualActor" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
 script = ExtResource("1_0ngtw")
-actor = ExtResource("14_5q380")
+actor = ExtResource("16_ck40k")
 
 [node name="Selectable" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
 script = ExtResource("3_eemmi")
@@ -276,5 +312,35 @@ expand_mode = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Generic Name"
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/EntityPanel/MarginContainer/VSplitContainer"]
+clip_children = 2
+clip_contents = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ck40k")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/EntityPanel/MarginContainer/VSplitContainer/PanelContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_qr0wu")
+theme_override_styles/fill = SubResource("StyleBoxTexture_hxrid")
+value = 100.0
+show_percentage = false
+
+[node name="ProgressBar2" type="TextureRect" parent="CanvasLayer/EntityPanel/MarginContainer/VSplitContainer/PanelContainer/ProgressBar"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+offset_right = 145.0
+offset_bottom = 5.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_hxrid")
+
+[node name="RectangularSelection2D" type="Panel" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("26_hxrid")
 
 [connection signal="entities_selected_changed" from="CameraController/Camera3D" to="CanvasLayer/EntityPanel" method="_on_camera_3d_entities_selected_changed"]
