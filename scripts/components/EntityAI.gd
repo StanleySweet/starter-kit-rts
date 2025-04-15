@@ -13,6 +13,7 @@ var current_state: int = EntityStates.IDLE
 # Référence aux composants
 var cmp_visual_actor : CmpVisualActor
 var cmp_motion : CmpMotion
+var cmp_sound : CmpSound
 
 # Signal émis lors d'un changement d'état
 signal state_changed(old_state : int, new_state : int)

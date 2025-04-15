@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bwtotan76woy7"]
+[gd_scene load_steps=63 format=3 uid="uid://bwtotan76woy7"]
 
 [ext_resource type="Script" uid="uid://b8no25psxp3de" path="res://scripts/components/VisualActor.gd" id="1_0ngtw"]
 [ext_resource type="PackedScene" uid="uid://dmyrflud401tg" path="res://addons/godot_plush_character/components/godot_plush/godot_plush_skin.tscn" id="1_jpunk"]
@@ -15,14 +15,26 @@
 [ext_resource type="Script" uid="uid://ighkv3e533rb" path="res://scripts/components/Identity.gd" id="12_dlg3r"]
 [ext_resource type="Texture2D" uid="uid://c4y1iafmkp4if" path="res://addons/kenney_cursor_pack/sprites/gauntlet_default.png" id="12_uyd3r"]
 [ext_resource type="Texture2D" uid="uid://c6wpwd87csbtq" path="res://icon.svg" id="13_66f5p"]
-[ext_resource type="PackedScene" uid="uid://c6iy24g7orw1a" path="res://addons/kenney_survival_kit/models/tree-tall.glb" id="14_5q380"]
 [ext_resource type="Texture2D" uid="uid://ihs0152nidix" path="res://addons/kenney_cursor_pack/sprites/tool_axe_single.png" id="15_1hh83"]
 [ext_resource type="Script" uid="uid://dk83u2pbkydu6" path="res://scripts/SelectionManager.gd" id="15_524ts"]
+[ext_resource type="Script" uid="uid://csrokhowmtnln" path="res://scripts/components/Health.gd" id="15_ck40k"]
 [ext_resource type="Script" uid="uid://cxsyyhsv7a0dp" path="res://scripts/CursorManager.gd" id="15_jw3sc"]
 [ext_resource type="Script" uid="uid://bw3glv3nm8bj0" path="res://scripts/components/Ownership.gd" id="15_lh0w6"]
+[ext_resource type="Script" uid="uid://igeredxx5xbu" path="res://scripts/components/Sound.gd" id="16_0tw1y"]
+[ext_resource type="PackedScene" uid="uid://d1ccwogsw1udd" path="res://scenes/gaia/trees/tree_tall.tscn" id="16_ck40k"]
+[ext_resource type="Script" uid="uid://yqmjbj0smwn4" path="res://scripts/resources/SoundGroup.gd" id="17_jtkau"]
+[ext_resource type="AudioStream" uid="uid://c0xoggv0u2u5a" path="res://addons/kenney_interface_sounds/Audio/select_001.ogg" id="18_7ud1y"]
+[ext_resource type="AudioStream" uid="uid://dyhikpkvu3k8r" path="res://addons/kenney_interface_sounds/Audio/select_002.ogg" id="18_ep1hb"]
 [ext_resource type="Script" uid="uid://bmvgldruduyhq" path="res://scripts/gui/EntityPanel.gd" id="19_boucf"]
+[ext_resource type="AudioStream" uid="uid://b7q12qmsksbc7" path="res://addons/godot_plush_character/assets/sounds/footstep_concrete_000.ogg" id="20_3laiw"]
+[ext_resource type="AudioStream" uid="uid://c6unhc5lontfn" path="res://addons/godot_plush_character/assets/sounds/footstep_concrete_001.ogg" id="21_5r8b1"]
 [ext_resource type="Script" uid="uid://t1gykh7h0tdw" path="res://scripts/components/PlayerManager.gd" id="22_ibvuv"]
+[ext_resource type="AudioStream" uid="uid://byg4lkp3ws8kt" path="res://addons/godot_plush_character/assets/sounds/footstep_concrete_002.ogg" id="22_p4uag"]
 [ext_resource type="Script" uid="uid://cuuxabwuo57cd" path="res://scripts/resources/Player.gd" id="23_ck40k"]
+[ext_resource type="Script" uid="uid://dq3rmae37ghk5" path="res://scripts/SoundManager.gd" id="24_hxrid"]
+[ext_resource type="Script" uid="uid://bvxv76gle2wui" path="res://scripts/gui/rectangular_selection_2d.gd" id="26_hxrid"]
+[ext_resource type="Texture2D" uid="uid://bsdfijhysikqe" path="res://addons/kenney_cursor_pack/sprites/door.png" id="31_p4uag"]
+[ext_resource type="Script" uid="uid://c7a8cleuq04gw" path="res://scripts/components/Minimap.gd" id="34_5r8b1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wfdo7"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -36,12 +48,10 @@ background_mode = 2
 sky = SubResource("Sky_w6gu6")
 tonemap_mode = 2
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_uyd3r"]
-radius = 0.845215
-
 [sub_resource type="NavigationMesh" id="NavigationMesh_wfdo7"]
 vertices = PackedVector3Array(-49.5, 0.38324, 0, -4.75, 0.38324, 0, -4.25, 0.38324, -1, -3.5, 0.38324, -49.5, -49.5, 0.38324, -49.5, -3.5, 0.38324, -1, -2.75, 0.38324, -0.75, 49.5, 0.38324, 0, 49.5, 0.38324, -49.5, -2.75, 0.38324, 0, -4.25, 0.38324, 1, -49.5, 0.38324, 49.5, -3.5, 0.38324, 49.5, -3.5, 0.38324, 1, -2.75, 0.38324, 0.75, 49.5, 0.38324, 49.5)
 polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Array(2, 4, 3), PackedInt32Array(3, 5, 2), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 8), PackedInt32Array(6, 8, 7), PackedInt32Array(7, 9, 6), PackedInt32Array(1, 10, 0), PackedInt32Array(0, 10, 11), PackedInt32Array(11, 10, 12), PackedInt32Array(10, 13, 12), PackedInt32Array(13, 14, 12), PackedInt32Array(12, 14, 15), PackedInt32Array(15, 14, 7), PackedInt32Array(14, 9, 7)]
+geometry_parsed_geometry_type = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noavr"]
 albedo_color = Color(0.117647, 0.984314, 0.266667, 1)
@@ -57,6 +67,16 @@ data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0,
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_jw3sc"]
 height = 6.47314
 radius = 0.377441
+
+[sub_resource type="Resource" id="Resource_8nbun"]
+script = ExtResource("17_jtkau")
+sounds = Array[AudioStream]([ExtResource("18_7ud1y"), ExtResource("18_ep1hb")])
+metadata/_custom_type_script = "uid://yqmjbj0smwn4"
+
+[sub_resource type="Resource" id="Resource_1e8gq"]
+script = ExtResource("17_jtkau")
+sounds = Array[AudioStream]([ExtResource("20_3laiw"), ExtResource("21_5r8b1"), ExtResource("22_p4uag")])
+metadata/_custom_type_script = "uid://yqmjbj0smwn4"
 
 [sub_resource type="Resource" id="Resource_qr0wu"]
 script = ExtResource("23_ck40k")
@@ -75,6 +95,69 @@ script = ExtResource("23_ck40k")
 player_name = "Player 2"
 player_color = Color(1, 0, 0, 1)
 metadata/_custom_type_script = "uid://cuuxabwuo57cd"
+
+[sub_resource type="Gradient" id="Gradient_3laiw"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5r8b1"]
+gradient = SubResource("Gradient_3laiw")
+width = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4uag"]
+texture = SubResource("GradientTexture1D_5r8b1")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ck40k"]
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qr0wu"]
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+
+[sub_resource type="Gradient" id="Gradient_ck40k"]
+interpolation_color_space = 2
+colors = PackedColorArray(1, 0, 0, 1, 0, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qr0wu"]
+gradient = SubResource("Gradient_ck40k")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxrid"]
+texture = SubResource("GradientTexture1D_qr0wu")
+
+[sub_resource type="Gradient" id="Gradient_qr0wu"]
+offsets = PackedFloat32Array(0, 0.660405)
+colors = PackedColorArray(0, 0, 0, 0.392157, 0.977702, 0.977702, 0.977702, 0.392157)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hxrid"]
+gradient = SubResource("Gradient_qr0wu")
+height = 5
+fill_from = Vector2(1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3laiw"]
+
+[sub_resource type="Gradient" id="Gradient_5r8b1"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.596273, 0.621118)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.231373, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p4uag"]
+gradient = SubResource("Gradient_5r8b1")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uyd3r"]
+radius = 0.845215
 
 [node name="Session" type="Node"]
 
@@ -97,9 +180,405 @@ near = 2.0
 far = 4096.0
 script = ExtResource("2_w6gu6")
 
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_wfdo7")
+
+[node name="DebugTerrain" type="MeshInstance3D" parent="NavigationRegion3D"]
+layers = 3
+mesh = SubResource("QuadMesh_wfdo7")
+skeleton = NodePath("../../Entities/DebugEntity/VisualActor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/DebugTerrain"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DebugTerrain/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_jpunk")
+
+[node name="Entities" type="Node3D" parent="NavigationRegion3D"]
+
+[node name="Tree" type="Node3D" parent="NavigationRegion3D/Entities" groups=["CmpEntities"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.66809, 0, 0)
+script = ExtResource("3_sdj5t")
+
+[node name="VisualActor" type="Node" parent="NavigationRegion3D/Entities/Tree"]
+script = ExtResource("1_0ngtw")
+actor = ExtResource("16_ck40k")
+
+[node name="Footprint" type="Node" parent="NavigationRegion3D/Entities/Tree"]
+script = ExtResource("5_he6ka")
+size = Vector2(2, 2)
+
+[node name="Obstruction" type="StaticBody3D" parent="NavigationRegion3D/Entities/Tree"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Entities/Tree/Obstruction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0136719, 2.61981, 0.0462646)
+shape = SubResource("CylinderShape3D_jw3sc")
+
+[node name="Identity" type="Node" parent="NavigationRegion3D/Entities/Tree"]
+script = ExtResource("12_dlg3r")
+generic_name = "Tree"
+icon = ExtResource("15_1hh83")
+
+[node name="Ownership" type="Node" parent="NavigationRegion3D/Entities/Tree"]
+script = ExtResource("15_lh0w6")
+
+[node name="Selectable" type="Node" parent="NavigationRegion3D/Entities/Tree"]
+script = ExtResource("3_eemmi")
+outline_texture = ExtResource("6_noavr")
+outline_mask_texture = ExtResource("7_jpunk")
+ring_offset = 0.1
+
+[node name="Sound" type="Node" parent="NavigationRegion3D/Entities/Tree"]
+script = ExtResource("16_0tw1y")
+sound_groups = Dictionary[String, ExtResource("17_jtkau")]({
+"select": SubResource("Resource_8nbun"),
+"walk": SubResource("Resource_1e8gq")
+})
+
+[node name="Minimap" type="Node" parent="NavigationRegion3D/Entities/Tree"]
+script = ExtResource("34_5r8b1")
+default_color = null
+size = null
+
+[node name="SystemEntity" type="Node" parent="."]
+script = ExtResource("3_sdj5t")
+
+[node name="SelectionManager" type="Node" parent="SystemEntity"]
+script = ExtResource("15_524ts")
+
+[node name="CursorManager" type="Node" parent="SystemEntity"]
+script = ExtResource("15_jw3sc")
+default_cursor = ExtResource("12_uyd3r")
+gauntlet_open_cursor = ExtResource("12_8acwk")
+
+[node name="PlayerManager" type="Node" parent="SystemEntity"]
+script = ExtResource("22_ibvuv")
+players = Array[ExtResource("23_ck40k")]([SubResource("Resource_qr0wu"), SubResource("Resource_ck40k"), SubResource("Resource_hxrid")])
+
+[node name="SoundManager" type="Node" parent="SystemEntity"]
+script = ExtResource("24_hxrid")
+max_positional_audio_sources = 4
+max_audio_sources = 4
+
+[node name="MusicPlayer3D" type="AudioStreamPlayer2D" parent="SystemEntity/SoundManager"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RectangularSelection2D" type="Panel" parent="CanvasLayer"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_p4uag")
+script = ExtResource("26_hxrid")
+
+[node name="EntityPanel" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -376.0
+offset_top = -200.0
+offset_right = 359.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("19_boucf")
+
+[node name="HSplitContainer" type="GridContainer" parent="CanvasLayer/EntityPanel"]
+layout_mode = 2
+columns = 3
+
+[node name="SelectionPanel" type="MarginContainer" parent="CanvasLayer/EntityPanel/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel"]
+layout_mode = 2
+columns = 4
+
+[node name="EntityIcon2" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon3" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon4" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon5" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon6" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon7" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon8" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon9" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon10" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon11" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon12" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityIcon13" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/SelectionPanel/GridContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/EntityPanel/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/EntityPanel/HSplitContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/EntityPanel/HSplitContainer/MarginContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="EntityIcon" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/MarginContainer/VSplitContainer/HSplitContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("13_66f5p")
+expand_mode = 1
+
+[node name="EntityGenericName" type="Label" parent="CanvasLayer/EntityPanel/HSplitContainer/MarginContainer/VSplitContainer/HSplitContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Generic Name"
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/EntityPanel/HSplitContainer/MarginContainer/VSplitContainer"]
+clip_children = 2
+clip_contents = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ck40k")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/EntityPanel/HSplitContainer/MarginContainer/VSplitContainer/PanelContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_qr0wu")
+theme_override_styles/fill = SubResource("StyleBoxTexture_hxrid")
+value = 100.0
+show_percentage = false
+
+[node name="ProgressBar2" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/MarginContainer/VSplitContainer/PanelContainer/ProgressBar"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+offset_right = 145.0
+offset_bottom = 5.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_hxrid")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/EntityPanel/HSplitContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ConstructionPanel" type="MarginContainer" parent="CanvasLayer/EntityPanel/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel"]
+layout_mode = 2
+columns = 8
+
+[node name="EntityIcon2" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon3" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon4" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon5" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon6" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon7" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon8" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon9" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon10" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon11" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon12" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon13" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon14" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon15" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon16" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="EntityIcon17" type="TextureRect" parent="CanvasLayer/EntityPanel/HSplitContainer/ConstructionPanel/GridContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("31_p4uag")
+expand_mode = 1
+
+[node name="MinimapPanel" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3laiw")
+
+[node name="TextureRect" type="Sprite2D" parent="CanvasLayer/MinimapPanel"]
+clip_children = 1
+position = Vector2(64, -64)
+texture = SubResource("GradientTexture2D_p4uag")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/MinimapPanel/TextureRect"]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/MinimapPanel/TextureRect/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="MinimapCamera" type="Camera3D" parent="CanvasLayer/MinimapPanel/TextureRect/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
+cull_mask = 1048574
+projection = 1
+size = 50.0
+far = 50.0
+
 [node name="Entities" type="Node3D" parent="."]
 
-[node name="DebugEntity" type="Node3D" parent="Entities"]
+[node name="DebugEntity" type="Node3D" parent="Entities" groups=["CmpEntities"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("3_sdj5t")
 
@@ -118,6 +597,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0136719, 0.38324, 0.046264
 shape = SubResource("CylinderShape3D_uyd3r")
 
 [node name="Motion" type="NavigationAgent3D" parent="Entities/DebugEntity"]
+avoidance_enabled = true
 script = ExtResource("9_jpunk")
 
 [node name="EntityAI" type="Node" parent="Entities/DebugEntity"]
@@ -128,27 +608,37 @@ script = ExtResource("12_dlg3r")
 generic_name = "Godot Plush"
 icon = ExtResource("13_66f5p")
 
+[node name="Ownership" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("15_lh0w6")
+owner_id = 1
+
 [node name="Selectable" type="Node" parent="Entities/DebugEntity"]
 script = ExtResource("3_eemmi")
 outline_texture = ExtResource("6_noavr")
 outline_mask_texture = ExtResource("7_jpunk")
 
-[node name="Ownership" type="Node" parent="Entities/DebugEntity"]
-script = ExtResource("15_lh0w6")
-owner_id = 1
+[node name="Health" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("15_ck40k")
 
-[node name="DebugEntity2" type="Node3D" parent="Entities"]
+[node name="Sound" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("16_0tw1y")
+sound_groups = Dictionary[String, ExtResource("17_jtkau")]({
+"select": SubResource("Resource_8nbun"),
+"walk": SubResource("Resource_1e8gq")
+})
+
+[node name="Minimap" type="Node" parent="Entities/DebugEntity"]
+script = ExtResource("34_5r8b1")
+default_color = null
+size = null
+
+[node name="DebugEntity2" type="Node3D" parent="Entities" groups=["CmpEntities"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.88883, 0.5, 0)
 script = ExtResource("3_sdj5t")
 
 [node name="VisualActor" type="Node" parent="Entities/DebugEntity2"]
 script = ExtResource("1_0ngtw")
 actor = ExtResource("1_jpunk")
-
-[node name="Selectable" type="Node" parent="Entities/DebugEntity2"]
-script = ExtResource("3_eemmi")
-outline_texture = ExtResource("6_noavr")
-outline_mask_texture = ExtResource("7_jpunk")
 
 [node name="Footprint" type="Node" parent="Entities/DebugEntity2"]
 script = ExtResource("5_he6ka")
@@ -161,6 +651,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0136719, 0.38324, 0.046264
 shape = SubResource("CylinderShape3D_uyd3r")
 
 [node name="Motion" type="NavigationAgent3D" parent="Entities/DebugEntity2"]
+avoidance_enabled = true
 script = ExtResource("9_jpunk")
 
 [node name="EntityAI" type="Node" parent="Entities/DebugEntity2"]
@@ -175,106 +666,21 @@ icon = ExtResource("13_66f5p")
 script = ExtResource("15_lh0w6")
 owner_id = 2
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_wfdo7")
-
-[node name="DebugTerrain" type="MeshInstance3D" parent="NavigationRegion3D"]
-mesh = SubResource("QuadMesh_wfdo7")
-skeleton = NodePath("../../Entities/DebugEntity/VisualActor")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/DebugTerrain"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/DebugTerrain/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_jpunk")
-
-[node name="Entities2" type="Node3D" parent="NavigationRegion3D"]
-
-[node name="Tree" type="Node3D" parent="NavigationRegion3D/Entities2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.66809, 0, 0)
-script = ExtResource("3_sdj5t")
-
-[node name="VisualActor" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
-script = ExtResource("1_0ngtw")
-actor = ExtResource("14_5q380")
-
-[node name="Selectable" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
+[node name="Selectable" type="Node" parent="Entities/DebugEntity2"]
 script = ExtResource("3_eemmi")
 outline_texture = ExtResource("6_noavr")
 outline_mask_texture = ExtResource("7_jpunk")
-ring_offset = 0.1
 
-[node name="Footprint" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
-script = ExtResource("5_he6ka")
-size = Vector2(2, 2)
+[node name="Sound" type="Node" parent="Entities/DebugEntity2"]
+script = ExtResource("16_0tw1y")
+sound_groups = Dictionary[String, ExtResource("17_jtkau")]({
+"select": SubResource("Resource_8nbun"),
+"walk": SubResource("Resource_1e8gq")
+})
 
-[node name="Obstruction" type="StaticBody3D" parent="NavigationRegion3D/Entities2/Tree"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Entities2/Tree/Obstruction"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0136719, 2.61981, 0.0462646)
-shape = SubResource("CylinderShape3D_jw3sc")
-
-[node name="Identity" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
-script = ExtResource("12_dlg3r")
-generic_name = "Tree"
-icon = ExtResource("15_1hh83")
-
-[node name="Ownership" type="Node" parent="NavigationRegion3D/Entities2/Tree"]
-script = ExtResource("15_lh0w6")
-
-[node name="SystemEntity" type="Node" parent="."]
-script = ExtResource("3_sdj5t")
-
-[node name="SelectionManager" type="Node" parent="SystemEntity"]
-script = ExtResource("15_524ts")
-
-[node name="CursorManager" type="Node" parent="SystemEntity"]
-script = ExtResource("15_jw3sc")
-default_cursor = ExtResource("12_uyd3r")
-gauntlet_open_cursor = ExtResource("12_8acwk")
-
-[node name="PlayerManager" type="Node" parent="SystemEntity"]
-script = ExtResource("22_ibvuv")
-players = Array[ExtResource("23_ck40k")]([SubResource("Resource_qr0wu"), SubResource("Resource_ck40k"), SubResource("Resource_hxrid")])
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="EntityPanel" type="PanelContainer" parent="CanvasLayer"]
-visible = false
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -75.0
-offset_top = -200.0
-offset_right = 75.0
-grow_horizontal = 2
-grow_vertical = 0
-script = ExtResource("19_boucf")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/EntityPanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/EntityPanel/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/EntityPanel/MarginContainer/VSplitContainer"]
-layout_mode = 2
-
-[node name="EntityIcon" type="TextureRect" parent="CanvasLayer/EntityPanel/MarginContainer/VSplitContainer/HSplitContainer"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-texture = ExtResource("13_66f5p")
-expand_mode = 1
-
-[node name="EntityGenericName" type="Label" parent="CanvasLayer/EntityPanel/MarginContainer/VSplitContainer/HSplitContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 10
-text = "Generic Name"
+[node name="Minimap" type="Node" parent="Entities/DebugEntity2"]
+script = ExtResource("34_5r8b1")
+default_color = null
+size = null
 
 [connection signal="entities_selected_changed" from="CameraController/Camera3D" to="CanvasLayer/EntityPanel" method="_on_camera_3d_entities_selected_changed"]

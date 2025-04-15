@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cla33c2qqx78a"]
 
-[ext_resource type="PackedScene" uid="uid://bgkmxyw21pc1m" path="res://components/player/player.tscn" id="1_gygqy"]
-[ext_resource type="Material" uid="uid://coy4nf1ts2u0q" path="res://components/grid_mat.tres" id="2_p8i8x"]
+[ext_resource type="PackedScene" uid="uid://bgkmxyw21pc1m" path="res://addons/godot_plush_character/components/player/player.tscn" id="1_gygqy"]
+[ext_resource type="Material" uid="uid://coy4nf1ts2u0q" path="res://addons/godot_plush_character/components/grid_mat.tres" id="2_p8i8x"]
 
 [sub_resource type="Environment" id="Environment_0aoev"]
 background_mode = 1

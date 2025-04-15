@@ -12,17 +12,7 @@ func _process(_delta: float) -> void:
 	check_hover()
 
 func check_hover() -> void:
-	var space_state := camera.get_world_3d().direct_space_state
-	var mouse_position := camera.get_viewport().get_mouse_position()
-	
-	# Create a ray from the camera
-	var from := camera.project_ray_origin(mouse_position)
-	var to := from + camera.project_ray_normal(mouse_position) * ray_length
-	
-	# Perform the raycast
-	var query := PhysicsRayQueryParameters3D.create(from, to)
-	var result := space_state.intersect_ray(query)
-	
+	var result : Variant = camera.get_ray_intersect_object()
 	var was_hovering := hovering_selectable
 	hovering_selectable = false
 	

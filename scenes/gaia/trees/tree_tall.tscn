@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1ccwogsw1udd"]
+
+[ext_resource type="PackedScene" uid="uid://c6iy24g7orw1a" path="res://addons/kenney_survival_kit/models/tree-tall.glb" id="1_rre5v"]
+
+[node name="tree-tall2" instance=ExtResource("1_rre5v")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
